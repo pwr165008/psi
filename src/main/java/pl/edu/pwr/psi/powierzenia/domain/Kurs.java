@@ -10,5 +10,5 @@ public class Kurs {
     private int liczbaGodzin;
     private String kod;
     private List<Grupa> grupy;
-    private PlanStudiow planStudiow;
+    private List<PlanStudiow> planStudiow;
 }
