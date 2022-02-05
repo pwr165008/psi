@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+#  web:
+#    image: devfull/app
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - twwo
+#    environment:
+#      DB_HOSTNAME: db
+#      DB_PORT: 5432
+#      DB_DATABASE: twwo
+#      DB_USERNAME: twwo
+#      DB_PASSWORD: twwo
+
+  db:
+    image: devfull/db
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - twwo
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_PASSWORD: Secret123!
+      TWWO_USERNAME: twwo
+      TWWO_PASSWORD: twwo
+      TWWO_DATABASE: twwo
+
+volumes:
+  pg-data:
+
+networks:
+  twwo:
