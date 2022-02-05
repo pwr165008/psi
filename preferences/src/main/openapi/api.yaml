@@ -1,0 +1,59 @@
+openapi: 3.0.0
+info:
+  title: PSI Powierzenia - preferencje
+  description: Detailed description can be found in the repository.
+  version: 0.1.0
+servers:
+  - url: https://psi/
+    description: Main (production) server
+  - url: http://localhost:3000
+    description: Local server for development
+  - url: http://localhost:6006
+    description: Local server for Storybook
+paths:
+  /preferences:
+    get:
+      summary: List preference of lecturer.
+      description: Optional extended description in CommonMark or HTML.
+      operationId: getPreferences
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Template
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceList'
+    post:
+      summary: Find preferences
+      description: Optional extended description in CommonMark or HTML.
+      operationId: findPreferences
+      responses:
+        '200':
+          description: Template
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreferenceList'
+components:
+  schemas:
+    PreferenceList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Preference'
+    Preference:
+      type: object
+      properties:
+        lecturerId:
+          $ref: '#/components/schemas/LecturerId'
+        course:
+          $ref: '#/components/schemas/CourseId'
+    LecturerId:
+      type: string
+    CourseId:
+      type: string
