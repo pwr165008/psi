@@ -7,9 +7,11 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import LanguageSwitch from "../switch/LanguageSwitch";
 import { useTranslation } from 'react-i18next';
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const Navbar = () => {
-  const { t, _ } = useTranslation();
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const { t } = useTranslation();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -24,9 +26,15 @@ export const Navbar = () => {
           >
             <MenuIcon />
           </IconButton>
+          
           <div sx={{ display: 'flex', flexDirection: 'row' }}>
             <LanguageSwitch />
-            <Button color="inherit">{t("login")}</Button>
+
+            { isAuthenticated ? 
+            <Button color="inherit" onClick={() => logout({ returnTo: window.location.origin })}>{t("logout")}</Button> :
+            <Button color="inherit" onClick={loginWithRedirect}>{t("login")}</Button>
+            }
+
           </div>
         </Toolbar>
       </AppBar>
