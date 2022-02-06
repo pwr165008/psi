@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import Grid from '@mui/material/Grid';
 import MenuIcon from '@mui/icons-material/Menu';
 import LanguageSwitch from "../switch/LanguageSwitch";
 import { useTranslation } from 'react-i18next';
@@ -26,8 +27,8 @@ export const Navbar = () => {
           >
             <MenuIcon />
           </IconButton>
-          
-          <div sx={{ display: 'flex', flexDirection: 'row' }}>
+
+          <Grid sx={{ display: 'flex', alignItems: 'flex-end', flexDirection: 'column' }}>
             <LanguageSwitch />
 
             { isAuthenticated ? 
@@ -35,7 +36,7 @@ export const Navbar = () => {
             <Button color="inherit" onClick={loginWithRedirect}>{t("login")}</Button>
             }
 
-          </div>
+          </Grid>
         </Toolbar>
       </AppBar>
     </Box>

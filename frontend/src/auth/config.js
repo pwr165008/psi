@@ -2,7 +2,7 @@ import configJson from "./auth-config.json";
 
 export const getConfig = () => {
   const audience =
-    configJson.audience && configJson.audience !== "YOUR_API_IDENTIFIER"
+    configJson.audience && configJson.audience !== "https://psi.empinet.pl/"
       ? configJson.audience
       : null;
 
