@@ -31,4 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-frontend/src/auth/auth-config.json
