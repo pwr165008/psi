@@ -7,9 +7,9 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import LanguageSwitch from "../switch/LanguageSwitch";
 import { useTranslation } from 'react-i18next';
+
 export const Navbar = () => {
- 
-  const { t, i18n } = useTranslation();
+  const { t, _ } = useTranslation();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -24,9 +24,10 @@ export const Navbar = () => {
           >
             <MenuIcon />
           </IconButton>
-         <div sx={{display: 'flex', flexDirection: 'row'}}> 
-          <LanguageSwitch  />
-          <Button color="inherit">{t("login")}</Button></div>
+          <div sx={{ display: 'flex', flexDirection: 'row' }}>
+            <LanguageSwitch />
+            <Button color="inherit">{t("login")}</Button>
+          </div>
         </Toolbar>
       </AppBar>
     </Box>
