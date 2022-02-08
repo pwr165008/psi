@@ -1,5 +1,7 @@
 {
     "domain": "dev-lz6wlouf.eu.auth0.com",
     "clientId": "kGy9Y5NJ4LC9naGPGyINELz88ZvudKl8",
-    "audience": "https://psi.empinet.pl/"
+    "audience": "https://psi.empinet.pl/",
+    "userDataUrl": "https://dev-lz6wlouf.eu.auth0.com/userinfo",
+    "scope": "openid profile email"
 }

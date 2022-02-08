@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Auth0Provider } from "@auth0/auth0-react";
 import { getConfig } from "./auth/config";
+import AuthContextProvider from './context/AuthContextProvider';
 
 const config = getConfig();
 
@@ -18,7 +19,9 @@ const providerConfig = {
 ReactDOM.render(
   <React.StrictMode>
     <Auth0Provider {...providerConfig}>
-      <App />
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
     </Auth0Provider>
   </React.StrictMode>,
   document.getElementById('root')

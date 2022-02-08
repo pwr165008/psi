@@ -64,12 +64,12 @@ export default function CustomizedSwitches() {
   return (
     <FormGroup>
       <Stack direction="row" spacing={1} alignItems="center">
-        <Typography>Polski</Typography>
+        <Typography>PL</Typography>
         <AntSwitch
           checked={checked}
           onChange={handleChange}
           inputProps={{ 'aria-label': 'ant design' }} />
-        <Typography>English</Typography>
+        <Typography>EN</Typography>
       </Stack>
     </FormGroup>
   );
