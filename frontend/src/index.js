@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import './i18n';
 import { Auth0Provider } from "@auth0/auth0-react";
 import { getConfig } from "./auth/config";
+import AuthContextProvider from './context/AuthContextProvider';
 
 const config = getConfig();
 
@@ -15,12 +16,14 @@ const providerConfig = {
   ...(config.audience ? { audience: config.audience } : null),
   redirectUri: window.location.origin
 };
- 
+
 
 ReactDOM.render(
   <React.StrictMode>
     <Auth0Provider {...providerConfig}>
-      <App />
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
     </Auth0Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -1,20 +1,22 @@
-import React, { Component } from 'react';
-import { Container } from 'reactstrap';
+import React from 'react';
+import Container from '@mui/material/Container';
 import Navbar from '../../shared/navbar/Navbar';
+import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-export class Layout extends Component {
-  static displayName = Layout.name;
+export const Layout = ({ children }) => {
+  const darkTheme = createTheme({ palette: { mode: 'dark' } });
+  const lightTheme = createTheme({ palette: { mode: 'light' } });
 
-  render() {
-    return (
-      <div>
-        <Navbar />
-        <Container>
-          {this.props.children}
-        </Container>
-      </div>
-    );
-  }
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Navbar />
+      <Container>
+        {children}
+      </Container>
+    </ThemeProvider>
+  );
 }
 
 export default Layout;
