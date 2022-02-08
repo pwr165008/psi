@@ -4,21 +4,21 @@ info:
   description: Detailed description can be found in the repository.
   version: 0.1.0
 servers:
-  - url: https://psi/
+  - url: https://localhost/
     description: Main (production) server
   - url: http://localhost:3000
     description: Local server for development
   - url: http://localhost:6006
     description: Local server for Storybook
 paths:
-  /preferences:
+  /preferences/{lecturerId}:
     get:
-      summary: List preference of lecturer.
+      summary: List preferences by lecturerId.
       description: Optional extended description in CommonMark or HTML.
-      operationId: getPreferences
+      operationId: listPreference
       parameters:
         - in: path
-          name: id
+          name: lecturerId
           required: true
           schema:
             type: string
@@ -29,10 +29,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PreferenceList'
+  /preferences:
     post:
-      summary: Find preferences
+      summary: Find preferences.
       description: Optional extended description in CommonMark or HTML.
-      operationId: findPreferences
+      operationId: findpreferences
       responses:
         '200':
           description: Template
@@ -51,7 +52,7 @@ components:
       properties:
         lecturerId:
           $ref: '#/components/schemas/LecturerId'
-        course:
+        courseId:
           $ref: '#/components/schemas/CourseId'
     LecturerId:
       type: string

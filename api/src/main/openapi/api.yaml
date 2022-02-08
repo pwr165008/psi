@@ -1,0 +1,78 @@
+openapi: 3.0.0
+info:
+  title: PSI Powierzenia - powerzenia
+  description: Detailed description can be found in the repository.
+  version: 0.1.0
+servers:
+  - url: https://localhost/
+    description: Main (production) server
+  - url: http://localhost:3000
+    description: Local server for development
+  - url: http://localhost:6006
+    description: Local server for Storybook
+paths:
+  /health:
+    get:
+      summary: Deliver order by id.
+      description: Optional extended description in CommonMark or HTML.
+      operationId: deliverOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntrustmentFind'
+      responses:
+        '200':
+          description: Order delivered.
+components:
+  schemas:
+    OrderList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Order'
+    EntrustmentFind:
+      type: object
+      properties:
+        entrustments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Entrustment'
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Course'
+#            $ref: '../../../../product/src/main/openapi/api.yaml#/components/schemas/Course'
+        takeout:
+          type: boolean
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        items:
+          $ref: '#/components/schemas/OrderItemList'
+    OrderId:
+      type: string
+    OrderItemList:
+      type: array
+      items:
+        $ref: '#/components/schemas/OrderItem'
+    OrderItem:
+      type: object
+      properties:
+        id:
+          $ref: '../../../../product/src/main/openapi/api.yaml#/components/schemas/ProductId'
+        count:
+          description: Unit count
+          type: integer
+        price:
+          description: Unit price
+          type: number
+    OrderStatus:
+      description: >
+        ### Statuses
+        * CREATED the default status of new orders
+        * INPROGRESS indicates the order is accepted
+        * DELIVERED when the order is received
+      type: string
+      enum:
+        - CREATED
+        - INPROGRESS
+        - DELIVERED

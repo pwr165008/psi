@@ -4,7 +4,7 @@ info:
   description: Detailed description can be found in the repository.
   version: 0.1.0
 servers:
-  - url: https://psi/
+  - url: https://localhost/
     description: Main (production) server
   - url: http://localhost:3000
     description: Local server for development

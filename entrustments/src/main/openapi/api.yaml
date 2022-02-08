@@ -1,142 +1,120 @@
 openapi: 3.0.0
 info:
-  title: PIISW Order App - Order
+  title: PSI Powierzenia - powerzenia
   description: Detailed description can be found in the repository.
   version: 0.1.0
 servers:
-  - url: https://piisw-order-app.herokuapp.com/
+  - url: https://localhost/
     description: Main (production) server
   - url: http://localhost:3000
     description: Local server for development
   - url: http://localhost:6006
     description: Local server for Storybook
 paths:
-  /orders/{id}:
-    get:
-      summary: Get order by id.
-      description: Optional extended description in CommonMark or HTML.
-      operationId: getOrder
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Order status
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Order'
-  /orders/{id}/deliver:
+  /entrustments:
     post:
-      summary: Deliver order by id.
+      summary: Find entrustments.
       description: Optional extended description in CommonMark or HTML.
-      operationId: deliverOrder
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: Order delivered.
-  /orders:
-    get:
-      summary: List orders.
-      description: Optional extended description in CommonMark or HTML.
-      operationId: listOrders
-      responses:
-        '200':
-          description: Order status
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrderList'
-    post:
-      summary: Creates a new order.
-      description: Optional extended description in CommonMark or HTML.
-      operationId: createOrder
+      operationId: findEntrustments
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/EntrustmentFind'
       responses:
         '200':
-          description: Order status
+          description: Template
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
-    put:
-      summary: Replaces the order.
-      description: Optional extended description in CommonMark or HTML.
-      operationId: replaceOrder
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Order'
-      responses:
-        '200':
-          description: Order status
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Order'
-  /orders/install:
-    get:
-      summary: Refresh orders in the database.
-      description: Order list contains orders.
-      operationId: installOrders
-      responses:
-        '204':
-          description: Refresh complete.
+                $ref: '#/components/schemas/EntrustmentFindResponse'
 components:
   schemas:
-    OrderList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Order'
-    Order:
+    EntrustmentFind:
+      type: object
+      properties:
+        year:
+          $ref: '#/components/schemas/Year'
+        faculty:
+          $ref: '#/components/schemas/Faculty'
+        study:
+          $ref: '#/components/schemas/Study'
+    EntrustmentFindResponse:
+      type: object
+      properties:
+        entrustments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Entrustment'
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Course'
+        lecturers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Lecturer'
+        preferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/Preference'
+        limitations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Limitation'
+        pastAssignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Assignment'
+    Entrustment:
+      type: object
+      properties:
+        entrustmentId:
+          $ref: '#/components/schemas/EntrustmentId'
+        lecturerId:
+          $ref: '#/components/schemas/LecturerId'
+        courseId:
+          $ref: '#/components/schemas/CourseId'
+    Course:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/OrderId'
-        takeout:
-          type: boolean
-        status:
-          $ref: '#/components/schemas/OrderStatus'
-        items:
-          $ref: '#/components/schemas/OrderItemList'
-    OrderId:
-      type: string
-    OrderItemList:
-      type: array
-      items:
-        $ref: '#/components/schemas/OrderItem'
-    OrderItem:
+          $ref: '#/components/schemas/CourseId'
+    Lecturer:
       type: object
       properties:
         id:
-          $ref: '../../../../product/src/main/openapi/api.yaml#/components/schemas/ProductId'
-        count:
-          description: Unit count
-          type: integer
-        price:
-          description: Unit price
-          type: number
-    OrderStatus:
-      description: >
-        ### Statuses
-        * CREATED the default status of new orders
-        * INPROGRESS indicates the order is accepted
-        * DELIVERED when the order is received
+          $ref: '#/components/schemas/LecturerId'
+    Preference:
+      type: object
+      properties:
+        lecturerId:
+          $ref: '#/components/schemas/LecturerId'
+        courseId:
+          $ref: '#/components/schemas/CourseId'
+    Limitation:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/LimitationId'
+    Assignment:
+      type: object
+      properties:
+        lecturerId:
+          $ref: '#/components/schemas/LecturerId'
+        courseId:
+          $ref: '#/components/schemas/CourseId'
+    EntrustmentId:
       type: string
-      enum:
-        - CREATED
-        - INPROGRESS
-        - DELIVERED
+    LecturerId:
+      type: string
+    CourseId:
+      type: string
+    LimitationId:
+      type: string
+    Year:
+      type: string
+    Faculty:
+      type: string
+    Study:
+      type: string
