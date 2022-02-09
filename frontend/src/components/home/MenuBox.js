@@ -1,8 +1,15 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import MenuItem from './MenuItem';
+import { useNavigate } from 'react-router-dom';
 
 export const MenuBox = ({ itemNames, userRole }) => {
+
+    const navigate = useNavigate();
+    const handleClick = (route) => {
+        navigate(route);
+    }
+
     return <div>
         <h2>{userRole}</h2>
         <Box
@@ -18,7 +25,7 @@ export const MenuBox = ({ itemNames, userRole }) => {
             }}
         >
             {itemNames.map(itemName => (
-                <MenuItem key={itemName} elevation={3}>{itemName}</MenuItem>
+                <MenuItem onClick={() => handleClick(itemName)} key={itemName} elevation={3}>{itemName}</MenuItem>
             ))}
         </Box>
     </div>
