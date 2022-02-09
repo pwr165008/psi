@@ -4,7 +4,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { FixedSizeList } from 'react-window';
-import ListSubheader from '@mui/material/ListSubheader';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 
 function renderRow(props) {
   const { index, style } = props;
@@ -50,4 +50,4 @@ export function Preferences() {
   );
 }
 
-export default Preferences;
+export default withAuthenticationRequired(Preferences);

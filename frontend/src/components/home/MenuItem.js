@@ -7,7 +7,10 @@ export const MenuItem = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
     fontSize: '20px',
     height: 128,
-    lineHeight: '128px'
+    lineHeight: '128px',
+    '&:hover': {
+        cursor: 'pointer'
+    }
 }));
 
 export default MenuItem;

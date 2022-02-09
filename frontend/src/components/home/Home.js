@@ -5,6 +5,7 @@ import MenuBox from './MenuBox';
 import authContext from '../../context/authContext';
 import MenuSkeleton from './MenuSkeleton';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
+import roleMenus from "./role-menus.json";
 
 export const Home = () => {
     const userData = useContext(authContext);
@@ -18,7 +19,7 @@ export const Home = () => {
                 spacing={2}
             >
                 {roles ? roles.map(role => (
-                    <MenuBox key={role} itemNames={['Entrustments', 'Preferences']} userRole={role} />
+                    <MenuBox key={role} itemNames={roleMenus[role]} userRole={role} />
                 )) :
                 <MenuSkeleton />}
             </Stack>
