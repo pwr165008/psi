@@ -8,14 +8,18 @@ servers:
     description: Main (production) server
   - url: http://localhost:3000
     description: Local server for development
-  - url: http://localhost:6006
-    description: Local server for Storybook
 paths:
   /entrustments:
     post:
       summary: Find entrustments.
       description: Optional extended description in CommonMark or HTML.
       operationId: findEntrustments
+#      parameters:
+#        - in: header
+#          name: Authorization
+#          required: true
+#          schema:
+#            type: string
       requestBody:
         content:
           application/json:

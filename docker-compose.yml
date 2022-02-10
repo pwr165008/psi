@@ -20,9 +20,6 @@ services:
 #      TWWO_USERNAME: twwo
 #      TWWO_PASSWORD: twwo
 #      TWWO_DATABASE: twwo
-
-volumes:
-  pg-data:
-
-networks:
-  twwo:
+#
+#volumes:
+#  pg-data:

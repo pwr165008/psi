@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:6006"})
+@CrossOrigin
 public class TemplateController implements TemplatesApi {
 
     private final TemplateService templateService;

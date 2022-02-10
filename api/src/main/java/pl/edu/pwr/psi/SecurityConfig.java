@@ -6,9 +6,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.jwt.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -20,14 +23,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .mvcMatchers("/templates").permitAll()
-//                .mvcMatchers("/entrustments").authenticated()
-                .antMatchers(HttpMethod.POST, "/entrustments").authenticated()
-//                .mvcMatchers("/api/private-scoped").hasAuthority("SCOPE_read:messages")
-               .and().cors()
-                .and().oauth2ResourceServer().jwt().jwkSetUri("https://dev-lz6wlouf.eu.auth0.com/.well-known/jwks.json")
-                .and().and().csrf().disable();
+        // Enable CORS and disable CSRF
+        http = http.cors().and().csrf().disable();
+
+        // Set session management to stateless
+        http = http
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and();
+
+        http = http
+                .exceptionHandling()
+                .authenticationEntryPoint(
+                        (request, response, ex) -> {
+                            response.sendError(
+                                    HttpServletResponse.SC_UNAUTHORIZED,
+                                    ex.getMessage()
+                            );
+                        }
+                )
+                .and();
+
+        http.httpBasic().disable().authorizeRequests()
+                // Our public endpoints
+                .antMatchers(HttpMethod.GET, "/**").permitAll()
+                .anyRequest().authenticated();
     }
 
     @Bean

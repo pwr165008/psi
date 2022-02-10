@@ -2,6 +2,9 @@ package pl.edu.pwr.psi.entrustments.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AuthorizationServiceException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.pwr.psi.entrustments.api.*;
@@ -11,10 +14,11 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:6006"})
+@CrossOrigin(origins = {"*"})
 public class EntrustmentController implements EntrustmentsApi {
     @Override
     public ResponseEntity<EntrustmentFindResponse> findEntrustments(EntrustmentFind entrustmentFind) {
+        isOperator();
         var response = new EntrustmentFindResponse();
         response.setEntrustments(List.of(
                 makeEntrustment("INZ000013W", "prof.marian@pwr.edu.pl"),
@@ -40,6 +44,14 @@ public class EntrustmentController implements EntrustmentsApi {
                 makePastAssignment("dr.stefan@pwr.edu.pl", "INZ010012C")
         ));
         return ResponseEntity.ok(response);
+    }
+
+    private void isOperator() {
+        Jwt sec = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<String> roles = (List<String>) sec.getClaims().get("https://psi.empinet.pl/roles");
+        if(!roles.contains("operator")) {
+            throw new AuthorizationServiceException("Not permitted");
+        }
     }
 
     private Assignment makePastAssignment(String lecturerId, String courseId) {
@@ -75,4 +87,10 @@ public class EntrustmentController implements EntrustmentsApi {
         entrustment.setLecturerId(lecturerId);
         return entrustment;
     }
+//
+//    @Override
+//    public ResponseEntity<EntrustmentFindResponse> findEntrustments(String authentication, EntrustmentFind entrustmentFind) {
+//
+//        return null;
+//    }
 }

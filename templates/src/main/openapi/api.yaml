@@ -8,8 +8,6 @@ servers:
     description: Main (production) server
   - url: http://localhost:3000
     description: Local server for development
-  - url: http://localhost:6006
-    description: Local server for Storybook
 paths:
   /templates/{id}:
     get:

@@ -8,17 +8,25 @@ servers:
     description: Main (production) server
   - url: http://localhost:3000
     description: Local server for development
-  - url: http://localhost:6006
-    description: Local server for Storybook
 paths:
-  /preferences/{lecturerId}:
+  /preferences/{faculty}/{study}/{year}:
     get:
       summary: List preferences by lecturerId.
       description: Optional extended description in CommonMark or HTML.
-      operationId: listPreference
+      operationId: listAllPreferences
       parameters:
         - in: path
-          name: lecturerId
+          name: faculty
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: study
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: year
           required: true
           schema:
             type: string
@@ -30,17 +38,65 @@ paths:
               schema:
                 $ref: '#/components/schemas/PreferenceList'
   /preferences:
-    post:
-      summary: Find preferences.
+    get:
+      summary: List preferences by lecturerId.
       description: Optional extended description in CommonMark or HTML.
-      operationId: findpreferences
+      operationId: listPreferences
       responses:
         '200':
           description: Template
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PreferenceList'
+                $ref: '#/components/schemas/CourseList'
+    post:
+      summary: Add preferences.
+      description: Optional extended description in CommonMark or HTML.
+      operationId: addPreferences
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseList'
+      responses:
+        '200':
+          description: Template
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseList'
+    put:
+      summary: Replace preferences.
+      description: Optional extended description in CommonMark or HTML.
+      operationId: replacePreferences
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseList'
+      responses:
+        '200':
+          description: Template
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseList'
+    delete:
+      summary: Replace preferences.
+      description: Optional extended description in CommonMark or HTML.
+      operationId: deletePreferences
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseList'
+      responses:
+        '200':
+          description: Template
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseList'
 components:
   schemas:
     PreferenceList:
@@ -54,6 +110,10 @@ components:
           $ref: '#/components/schemas/LecturerId'
         courseId:
           $ref: '#/components/schemas/CourseId'
+    CourseList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CourseId'
     LecturerId:
       type: string
     CourseId:
