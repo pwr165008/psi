@@ -2,16 +2,17 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import MenuItem from './MenuItem';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export const MenuBox = ({ itemNames, userRole }) => {
-
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const handleClick = (route) => {
         navigate(route);
     }
 
     return <div>
-        <h2>{userRole}</h2>
+        <h2>{t(userRole)}</h2>
         <Box
             sx={{
                 display: 'flex',
@@ -25,7 +26,7 @@ export const MenuBox = ({ itemNames, userRole }) => {
             }}
         >
             {itemNames && itemNames.map(itemName => (
-                <MenuItem onClick={() => handleClick(itemName)} key={itemName} elevation={3}>{itemName}</MenuItem>
+                <MenuItem onClick={() => handleClick(itemName)} key={itemName} elevation={3}>{t(itemName)}</MenuItem>
             ))}
         </Box>
     </div>

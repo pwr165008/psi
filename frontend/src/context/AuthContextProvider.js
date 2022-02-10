@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import authContext from './authContext';
 import authConfig from "../auth/auth-config.json";
 import { useAuth0 } from '@auth0/auth0-react';
 
 export const AuthContextProvider = ({ children }) => {
     const { getAccessTokenWithPopup, getAccessTokenSilently } = useAuth0();
-    const [data, setData] = useState(null);
+    const [token, setToken] = useState(null);
 
     useEffect(() => {
         const getToken = async (callback) => await callback({
@@ -14,30 +13,18 @@ export const AuthContextProvider = ({ children }) => {
             scope: authConfig.scope
         });
 
-        const setUserData = (token) => {
-            console.log(token);
-
-            const config = {
-                headers: {
-                    Authorization: `bearer ${token}`
-                }
-            }
-            axios.get(authConfig.userDataUrl, config)
-                .then(res => setData(res.data));
-        }
-        
         getToken(getAccessTokenSilently).then(token => {
-            setUserData(token);
+            setToken(token);
         }).catch(() => {
             getToken(getAccessTokenWithPopup).then(token => {
-                setUserData(token);
+                setToken(token);
             });
         });
     }, [getAccessTokenSilently, getAccessTokenWithPopup])
 
     const { Provider } = authContext;
     return (
-        <Provider value={data}>
+        <Provider value={token}>
             {children}
         </Provider>
     );

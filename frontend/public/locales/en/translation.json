@@ -1,4 +1,13 @@
 {
     "login": "Login",
-    "logout": "Log out"
+    "logout": "Log out",
+    "MainMenu": "Main menu",
+    "Preferences": "Preferences",
+    "LecturerEntrustments": "Entrustments",
+    "OperatorEntrustments": "Entrustments",
+    "lecturer": "Lecturer",
+    "operator": "Operator",
+    "CourseList": "Course list",
+    "PreferredCourses": "Preferred courses",
+    "Course": "Course"
 }

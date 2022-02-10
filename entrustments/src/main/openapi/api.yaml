@@ -75,6 +75,8 @@ components:
           $ref: '#/components/schemas/LecturerId'
         courseId:
           $ref: '#/components/schemas/CourseId'
+        hours:
+          $ref: '#/components/schemas/Hours'
     Course:
       type: object
       properties:
@@ -85,6 +87,8 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/LecturerId'
+        pensum:
+          $ref: '#/components/schemas/Pensum'
     Preference:
       type: object
       properties:
@@ -118,3 +122,7 @@ components:
       type: string
     Study:
       type: string
+    Hours:
+      type: integer
+    Pensum:
+      type: integer
