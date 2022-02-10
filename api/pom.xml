@@ -87,12 +87,6 @@
         </dependency>
         <dependency>
             <groupId>pl.edu.pwr.psi</groupId>
-            <artifactId>templates</artifactId>
-            <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>pl.edu.pwr.psi</groupId>
             <artifactId>entrustments</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
