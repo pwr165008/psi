@@ -24,7 +24,7 @@ export const MenuBox = ({ itemNames, userRole }) => {
                 },
             }}
         >
-            {itemNames.map(itemName => (
+            {itemNames && itemNames.map(itemName => (
                 <MenuItem onClick={() => handleClick(itemName)} key={itemName} elevation={3}>{itemName}</MenuItem>
             ))}
         </Box>

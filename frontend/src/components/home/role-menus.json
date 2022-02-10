@@ -1,4 +1,4 @@
 {
-    "w8_operator": ["Preferences", "Entrustments"],
-    "w8_lecturer": ["Preferences", "Entrustments"]
+    "operator": ["OperatorEntrustments"],
+    "lecturer": ["Preferences", "LecturerEntrustments"]
 }
