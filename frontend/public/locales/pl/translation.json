@@ -1,4 +1,13 @@
 {
     "login": "Zaloguj",
-    "logout": "Wyloguj"
+    "logout": "Wyloguj",
+    "MainMenu": "Menu główne",
+    "Preferences": "Preferencje",
+    "LecturerEntrustments": "Powierzenia",
+    "OperatorEntrustments": "Powierzenia",
+    "lecturer": "Prowadzący",
+    "operator": "Osoba uprawniona",
+    "CourseList": "Lista kursów",
+    "PreferredCourses": "Preferowane kursy",
+    "Course": "Kurs"
 }

@@ -13,8 +13,7 @@ export const OperatorEntrustments = () => {
             axios.post('entrustments', null, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${context?.token}`,
-                    'Mode': 'no-cors'
+                    'Authorization': `Bearer ${context?.token}`
                 }
             }).then(res => setData(res.data));
         }

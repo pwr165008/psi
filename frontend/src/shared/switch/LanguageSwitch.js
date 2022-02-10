@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
@@ -51,14 +51,20 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
 export default function CustomizedSwitches() {
 
   const { i18n } = useTranslation();
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = React.useState(i18n.language === 'pl' ? false : true);
 
   const handleChange = () => {
-    setChecked(!checked)
-    if (checked) {
+    setChecked(!checked);
+    changeLanguge(checked);
+  }
+
+  const changeLanguge = (condition) => {
+    if (condition) {
       i18n.changeLanguage('pl');
     }
-    else { i18n.changeLanguage('en') }
+    else {
+      i18n.changeLanguage('en');
+    }
   }
 
   return (
