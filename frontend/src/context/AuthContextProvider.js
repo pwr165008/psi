@@ -9,11 +9,14 @@ export const AuthContextProvider = ({ children }) => {
     const [data, setData] = useState(null);
 
     useEffect(() => {
-        const getToken = async () => await getAccessTokenSilently({
+        const getToken = async (callback) => await callback({
             audience: authConfig.audience,
-            scope: authConfig.scope,
+            scope: authConfig.scope
         });
-        getToken().then(token => {
+
+        const setUserData = (token) => {
+            console.log(token);
+
             const config = {
                 headers: {
                     Authorization: `bearer ${token}`
@@ -21,8 +24,16 @@ export const AuthContextProvider = ({ children }) => {
             }
             axios.get(authConfig.userDataUrl, config)
                 .then(res => setData(res.data));
+        }
+        
+        getToken(getAccessTokenSilently).then(token => {
+            setUserData(token);
+        }).catch(() => {
+            getToken(getAccessTokenWithPopup).then(token => {
+                setUserData(token);
+            });
         });
-    }, [])
+    }, [getAccessTokenSilently, getAccessTokenWithPopup])
 
     const { Provider } = authContext;
     return (
