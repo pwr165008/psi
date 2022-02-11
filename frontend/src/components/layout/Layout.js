@@ -6,7 +6,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export const Layout = ({ children }) => {
   const darkTheme = createTheme({ palette: { mode: 'dark' } });
-  const lightTheme = createTheme({ palette: { mode: 'light' } });
+  // const lightTheme = createTheme({ palette: { mode: 'light' } });
 
   return (
     <ThemeProvider theme={darkTheme}>
