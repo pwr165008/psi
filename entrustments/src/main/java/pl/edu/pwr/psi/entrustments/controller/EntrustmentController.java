@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = {"http://localhost:3000"})
 public class EntrustmentController implements EntrustmentsApi {
     @Override
     public ResponseEntity<EntrustmentFindResponse> findEntrustments(EntrustmentFind entrustmentFind) {

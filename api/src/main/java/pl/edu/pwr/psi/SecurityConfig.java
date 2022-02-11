@@ -1,8 +1,11 @@
 package pl.edu.pwr.psi;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -23,31 +26,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        // Enable CORS and disable CSRF
-        http = http.cors().and().csrf().disable();
+        http.cors()
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/actuator/**")
+                .permitAll()
 
-        // Set session management to stateless
-        http = http
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and();
+//                .mvcMatchers("/entrustments").authenticated()
+                .antMatchers(HttpMethod.POST, "/entrustments").authenticated()
+//                .mvcMatchers("/api/private-scoped").hasAuthority("SCOPE_read:messages")
 
-        http = http
-                .exceptionHandling()
-                .authenticationEntryPoint(
-                        (request, response, ex) -> {
-                            response.sendError(
-                                    HttpServletResponse.SC_UNAUTHORIZED,
-                                    ex.getMessage()
-                            );
-                        }
-                )
-                .and();
-
-        http.httpBasic().disable().authorizeRequests()
-                // Our public endpoints
-                .antMatchers(HttpMethod.GET, "/**").permitAll()
-                .anyRequest().authenticated();
+                .and().oauth2ResourceServer().jwt().jwkSetUri("https://dev-lz6wlouf.eu.auth0.com/.well-known/jwks.json")
+                .and().and().csrf().disable();
+//        // Enable CORS and disable CSRF
+//        http = http.cors().and().csrf().disable();
+//
+//        // Set session management to stateless
+//        http = http
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and();
+//
+//        http = http
+//                .exceptionHandling()
+//                .authenticationEntryPoint(
+//                        (request, response, ex) -> {
+//                            response.sendError(
+//                                    HttpServletResponse.SC_UNAUTHORIZED,
+//                                    ex.getMessage()
+//                            );
+//                        }
+//                )
+//                .and();
+//
+//        http.oauth2ResourceServer().jwt().jwkSetUri()
+//                // Our public endpoints
+//                .antMatchers(HttpMethod.GET, "/**").permitAll()
+//                .anyRequest().authenticated();
     }
 
     @Bean
